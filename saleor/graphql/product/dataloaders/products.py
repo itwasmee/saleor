@@ -322,7 +322,9 @@ class VariantsChannelListingByProductIdAndChannelSlugLoader(
         self, channel_slug: str, products_ids: Iterable[int]
     ) -> Iterable[Tuple[int, Optional[List[ProductVariantChannelListing]]]]:
         variants_channel_listings = ProductVariantChannelListing.objects.filter(
-            channel__slug=channel_slug, variant__product_id__in=products_ids
+            channel__slug=channel_slug,
+            variant__product_id__in=products_ids,
+            price_amount__isnull=False,
         ).annotate(product_id=F("variant__product_id"))
 
         variants_channel_listings_map: Dict[
