@@ -66,7 +66,7 @@ GraphQL, Django, and ReactJS."                                                  
 
 FROM nginx:stable
 WORKDIR /app
-COPY ../nginx/saleor-nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/saleor-nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/dist/ /app/
 
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "saleor.asgi:application"]
