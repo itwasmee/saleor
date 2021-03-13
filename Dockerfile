@@ -64,4 +64,9 @@ GraphQL, Django, and ReactJS."                                                  
       org.opencontainers.image.authors="Mirumee Software (https://mirumee.com)"        \
       org.opencontainers.image.licenses="BSD 3"
 
+FROM nginx:stable
+WORKDIR /app
+COPY ../nginx/saleor-nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/dist/ /app/
+
 CMD ["gunicorn", "--bind", ":8000", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "saleor.asgi:application"]
